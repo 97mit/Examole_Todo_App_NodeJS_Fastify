@@ -1,0 +1,25 @@
+{
+  "name": "ws_node_api_ractice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "fastify": "^2.9.0",
+    "fastify-formbody": "^3.1.0",
+    "moment": "^2.24.0",
+    "mysql": "^2.17.1",
+    "sha1": "^1.1.1"
+  },
+  "devDependencies": {
+    "concat-stream": "^2.0.0",
+    "fastify-multipart": "^1.0.3",
+    "pump": "^3.0.0"
+  }
+}
