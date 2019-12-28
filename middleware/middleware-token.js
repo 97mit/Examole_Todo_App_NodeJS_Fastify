@@ -3,7 +3,7 @@ let connection = require('../connection');
 let moment = require('moment');
 
 async function check(request, reply) {
-    console.log("lewat middleware");
+    console.log("through middleware");
     let token = request.headers.authorization;
     let now = moment().format('YYYY-MM-DD HH:mm:ss').toString();
     let sql = "SELECT * FROM authentication WHERE id = ?";

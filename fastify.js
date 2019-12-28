@@ -4,12 +4,15 @@ require ('dotenv'). config ();
 const fastify = require ('fastify') ({
     logger: true // enable this to receive every log request from fastify.
 });
+let multer  = require('fastify-multer');
 
 // This function is to enable us to post through www-url-encoded.
-fastify.register (require ('fastify-formbody'));
-fastify.register(require('fastify-multipart'))
+//fastify.register (require ('fastify-formbody'));
+//fastify.register(require('fastify-multipart'));
+
+fastify.register(multer.contentParser);
 // Route separated from the root file.
-fastify.register (require ('./routes'));
+fastify.register(require ('./routes'));
 
 // The root file function is async.
 const start = async () => {

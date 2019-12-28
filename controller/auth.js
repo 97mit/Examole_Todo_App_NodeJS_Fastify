@@ -44,7 +44,7 @@ async function createToken (request, reply) {
             })
     );
 
-    return response.ok(data, `Berhasil membuat autentikasi!`, reply);
+    return response.ok(data, `Successfully created authentication!`, reply);
 }
 
 async function getUser (token) {
@@ -88,7 +88,7 @@ async function checkToken (request, reply) {
                 return rows[0].remember_token === user_token ? resolve(rows[0].expires_at) : resolve(false);
             }
             else{
-                return response.badRequest({}, "Token yang kamu masukkan salah!", reply);
+                return response.badRequest({}, "The token you entered is incorrect!", reply);
             }
 
         })

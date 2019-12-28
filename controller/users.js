@@ -1,42 +1,31 @@
 let response = require('../response');
 let connection = require('../connection');
 let sha1 = require('sha1');
-let moment = require('moment');
 let crypto = require('crypto');
 
-async function register (request, reply) {
-
-    let now = moment().format('YYYY-MM-DD HH:mm:ss').toString();
-    let name = request.body.name;
-    let email = request.body.email;
-    let password = sha1(request.body.password);
-    let token = crypto.randomBytes(32).toString('hex');
-    let created_at = now;
-    let updated_at = now;
-
-    let sql = `INSERT INTO users (name, email, password, remember_token, created_at, updated_at)
-      values(?, ?, ?, ?, ?, ?)`;
-
+async function register(request, reply) {
+    let reqData = JSON.parse(request.body.data);
+   // console.log(request.file.path)
+    reqData["avatar"] = request.file.path;
+    reqData["password"] = sha1(reqData.password);
+    reqData["token"] = crypto.randomBytes(32).toString('hex');
+    let sql = `CALL USP_TBL_M_USER_REGISTER(?);`;
 // Use a promise if you need data to be returned after the callback
     let data = await new Promise((resolve) =>
         connection.query(sql,
-            [name, email, password, token, created_at, updated_at], function (error, rows) {
+            [JSON.stringify(reqData)], function (error, rows) {
                 if(error){
                     // Check in advance for existing data.
                     if(error.code === 'ER_DUP_ENTRY'){
-                        return response.badRequest('', `E-mail ${email} has been used!`, reply)
+                        return response.badRequest('', `E-mail ${reqData.email} has been used!`, reply)
                     }
-
                     // If it is not a duplicate entry, then an error print will occur.
-                    console.log(error);
                     return response.badRequest('', `${error}`, reply)
                 }
-
-                return resolve({ name: name, email: email, token :  token});
+                return resolve({ name: reqData.name, email: reqData.email, token :  reqData.token,avatar:reqData.avatar});
             })
     );
-
-    return response.ok(data, `Successful new user registration - ${email}`, reply);
+    return response.ok(data , `Successful new user registration - ${reqData.email}`, reply);
 }
 async function login(request, reply) {
 
