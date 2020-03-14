@@ -42,7 +42,7 @@ async function routes(fastify, options) {
     });
     fastify.route({
         method: 'POST',
-        url: '/api/users/register',
+        url: '/api/register',
         preHandler: upload.single('avatar'),
         handler: await users.register
     });

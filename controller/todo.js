@@ -89,6 +89,7 @@ async function show(request, reply) {
     return response.ok(data, 'show', reply);
 }
 
+
 async function storeTodoImage(request, reply) {
     let reqData = JSON.parse(request.body.data);
     let now = moment().format('YYYY-MM-DD HH:mm:ss').toString();
